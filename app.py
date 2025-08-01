@@ -1,14 +1,48 @@
-
 import streamlit as st
+import pandas as pd
 
-# Page layout
-st.set_page_config(page_title="🪖 T10 Grind", layout="centered")
+# --- Dark Theme Config ---
+st.set_page_config(page_title="🪖 T10 Grind", layout="wide")
 
-# Header
-st.title("🪖 T10 Grind")
-st.markdown("Select your current research levels below to calculate remaining resources needed to unlock Tier 10 units.")
+# --- Language Toggle ---
+languages = {
+    "English": "en",
+    "Tiếng Việt": "vi",
+    "繁體中文": "zh"
+}
 
-# Research cost data (Iron, Bread, Gold)
+lang_choice = st.selectbox("🌐 Select Language / Chọn ngôn ngữ / 選擇語言", list(languages.keys()))
+lang = languages[lang_choice]
+
+# --- Localized Text ---
+text = {
+    "title": {
+        "en": "🪖 T10 Grind",
+        "vi": "🪖 Leo Đến T10",
+        "zh": "🪖 T10 研發之路"
+    },
+    "subtitle": {
+        "en": "Select your current research levels below to calculate remaining resources needed to unlock Tier 10 units.",
+        "vi": "Chọn cấp nghiên cứu hiện tại để tính toán tài nguyên còn thiếu để mở khóa đơn vị T10.",
+        "zh": "選擇你目前的研究等級，計算解鎖 T10 單位所需的剩餘資源。"
+    },
+    "total": {
+        "en": "🧾 Total Resources Needed",
+        "vi": "🧾 Tổng Tài Nguyên Cần Thiết",
+        "zh": "🧾 所需總資源"
+    },
+    "breakdown": {
+        "en": "🔍 Research Cost Breakdown",
+        "vi": "🔍 Chi Tiết Chi Phí Nghiên Cứu",
+        "zh": "🔍 研究資源明細"
+    }
+}
+
+# --- Header ---
+st.title(text["title"][lang])
+st.markdown(text["subtitle"][lang])
+
+# --- Cost Data ---
 cost_data = {
     "Advanced Protection": [
         (31_000_000, 31_000_000, 91_000_000),
@@ -63,22 +97,20 @@ cost_data = {
     ]
 }
 
-# Dropdowns for selecting current level
+# --- Dropdowns ---
 levels = {}
 for tech, data in cost_data.items():
     max_level = len(data)
-    label = f"{tech} Current Level"
     if tech == "Unit X":
-        options = ["Not Researched", "Researched"]
-        selected = st.selectbox("Unit X Status", options, index=0)
+        selected = st.selectbox("Unit X Status", ["Not Researched", "Researched"], index=0)
         levels[tech] = 0 if selected == "Not Researched" else 1
     else:
         level_options = list(range(0, max_level + 1))
-        levels[tech] = st.selectbox(label, level_options, index=0,
+        levels[tech] = st.selectbox(f"{tech} Current Level", level_options, index=0,
                                     format_func=lambda x: f"{x} (Max)" if x == max_level else str(x),
                                     key=tech)
 
-# Calculate remaining costs
+# --- Calculation ---
 remaining = {"Iron": 0, "Bread": 0, "Gold": 0}
 breakdown = []
 
@@ -89,21 +121,27 @@ for tech, data in cost_data.items():
         remaining["Iron"] += iron
         remaining["Bread"] += bread
         remaining["Gold"] += gold
-        breakdown.append((f"{tech} {i+1}", iron, bread, gold))
+        tech_label = tech if tech == "Unit X" else f"{tech} {i+1}"
+        breakdown.append((tech_label, iron, bread, gold))
 
-# Format helper
+# --- Format helper ---
 def fmt(n):
     if n >= 1_000_000_000:
         return f"{n/1_000_000_000:.1f}G"
     return f"{n/1_000_000:.1f}M"
 
-# Display total
-st.subheader("🧾 Total Resources Needed")
-st.markdown(f"**Iron:** {fmt(remaining['Iron'])} | **Bread:** {fmt(remaining['Bread'])} | **Gold:** {fmt(remaining['Gold'])}")
+# --- Total Display ---
+st.subheader(text["total"][lang])
+col1, col2, col3 = st.columns(3)
+col1.metric("Iron", fmt(remaining["Iron"]))
+col2.metric("Bread", fmt(remaining["Bread"]))
+col3.metric("Gold", fmt(remaining["Gold"]))
 
-# Display research breakdown
+# --- Breakdown Table ---
 if breakdown:
-    st.markdown("### 🔍 Research Cost Breakdown")
-    for name, iron, bread, gold in breakdown:
-        st.markdown(f"- **{name}** → Iron: {fmt(iron)}, Bread: {fmt(bread)}, Gold: {fmt(gold)}")
+    st.markdown(f"### {text['breakdown'][lang]}")
+    df = pd.DataFrame(breakdown, columns=["Research", "Iron", "Bread", "Gold"])
+    df[["Iron", "Bread", "Gold"]] = df[["Iron", "Bread", "Gold"]].applymap(fmt)
+    st.dataframe(df, use_container_width=True)
+
 
