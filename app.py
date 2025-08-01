@@ -4,6 +4,16 @@ import pandas as pd
 # --- Page Setup ---
 st.set_page_config(page_title="🪖 T10 Grind", layout="centered")
 
+# --- Matching Cargo Train Green Styling ---
+st.markdown("""
+    <style>
+    div[data-baseweb="select"] > div {
+        border-color: #28a745 !important;
+        box-shadow: 0 0 0 1px #28a745 !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 # --- Language Toggle (Top-Aligned) ---
 languages = {
     "English": "en",
@@ -142,6 +152,6 @@ col3.metric("Gold", fmt(remaining["Gold"]))
 if breakdown:
     st.markdown(f"### {text['breakdown'][lang]}")
     df = pd.DataFrame(breakdown, columns=["Research", "Iron", "Bread", "Gold"])
-    df.index = df.index + 1  # Start from 1
+    df.index = df.index + 1  # Start index at 1
     df[["Iron", "Bread", "Gold"]] = df[["Iron", "Bread", "Gold"]].applymap(fmt)
     st.dataframe(df.set_index(df.index.rename("")), use_container_width=True)
