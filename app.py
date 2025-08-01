@@ -1,8 +1,28 @@
 import streamlit as st
 import pandas as pd
 
-# --- Dark Theme Config ---
+# --- Dark Theme Styling ---
 st.set_page_config(page_title="🪖 T10 Grind", layout="wide")
+
+dark_theme = """
+    <style>
+    body {
+        background-color: #121212;
+        color: #e0e0e0;
+    }
+    .stApp {
+        background-color: #121212;
+    }
+    .stSelectbox, .stTextInput, .stDataFrame, .stMetric {
+        background-color: #1e1e1e !important;
+        color: #e0e0e0 !important;
+    }
+    table {
+        color: #e0e0e0 !important;
+    }
+    </style>
+"""
+st.markdown(dark_theme, unsafe_allow_html=True)
 
 # --- Language Toggle ---
 languages = {
@@ -56,7 +76,7 @@ cost_data = {
         (134_000_000, 134_000_000, 403_000_000),
         (175_000_000, 175_000_000, 522_000_000)
     ],
-    "HP Boost": [
+    "HP Boost III": [
         (31_000_000, 31_000_000, 91_000_000),
         (53_000_000, 53_000_000, 158_000_000),
         (53_000_000, 53_000_000, 158_000_000),
@@ -68,7 +88,7 @@ cost_data = {
         (134_000_000, 134_000_000, 403_000_000),
         (175_000_000, 175_000_000, 522_000_000)
     ],
-    "Attack Boost": [
+    "Attack Boost III": [
         (31_000_000, 31_000_000, 91_000_000),
         (53_000_000, 53_000_000, 158_000_000),
         (53_000_000, 53_000_000, 158_000_000),
@@ -80,7 +100,7 @@ cost_data = {
         (134_000_000, 134_000_000, 403_000_000),
         (175_000_000, 175_000_000, 522_000_000)
     ],
-    "Defense Boost": [
+    "Defense Boost III": [
         (31_000_000, 31_000_000, 91_000_000),
         (53_000_000, 53_000_000, 158_000_000),
         (53_000_000, 53_000_000, 158_000_000),
@@ -143,5 +163,3 @@ if breakdown:
     df = pd.DataFrame(breakdown, columns=["Research", "Iron", "Bread", "Gold"])
     df[["Iron", "Bread", "Gold"]] = df[["Iron", "Bread", "Gold"]].applymap(fmt)
     st.dataframe(df, use_container_width=True)
-
-
