@@ -8,7 +8,12 @@ st.set_page_config(page_title="🪖 T10 Grind", layout="centered")
 st.markdown("""
     <style>
     div[data-testid="stSelectbox"][id^="language_selector"] > div {
-        border-color: #28a745 !important;
+        border: 1px solid #28a745 !important;
+        box-shadow: 0 0 0 1px #28a745 !important;
+    }
+    div[data-testid="stSelectbox"][id^="language_selector"] > div:focus, 
+    div[data-testid="stSelectbox"][id^="language_selector"] > div:focus-within {
+        border: 1px solid #28a745 !important;
         box-shadow: 0 0 0 1px #28a745 !important;
     }
     </style>
