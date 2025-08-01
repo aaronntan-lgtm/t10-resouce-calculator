@@ -115,17 +115,15 @@ breakdown = []
 
 for tech, data in cost_data.items():
     current = levels[tech]
+    level_counter = 1  # Start numbering from 1
     for i in range(current, len(data)):
         iron, bread, gold = data[i]
         remaining["Iron"] += iron
         remaining["Bread"] += bread
         remaining["Gold"] += gold
-        if tech == "Unit X":
-            label = "Unit X"
-        else:
-            level_number = i + 1
-            label = f"{tech} {level_number}"
+        label = "Unit X" if tech == "Unit X" else f"{tech} {level_counter}"
         breakdown.append((label, iron, bread, gold))
+        level_counter += 1
 
 # --- Format helper ---
 def fmt(n):
