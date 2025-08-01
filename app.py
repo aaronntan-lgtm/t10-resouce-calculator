@@ -4,24 +4,26 @@ import pandas as pd
 # --- Page Setup ---
 st.set_page_config(page_title="🪖 T10 Grind", layout="centered")
 
-# --- Matching Cargo Train Green Styling ---
+# --- Apply Green Border ONLY to Language Dropdown ---
 st.markdown("""
     <style>
-    div[data-baseweb="select"] > div {
+    div[data-testid="stSelectbox"][id^="language_selector"] > div {
         border-color: #28a745 !important;
         box-shadow: 0 0 0 1px #28a745 !important;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# --- Language Toggle (Top-Aligned) ---
+# --- Language Toggle (Top-Aligned, Green Styled) ---
 languages = {
     "English": "en",
     "Tiếng Việt": "vi",
     "繁體中文": "zh"
 }
-lang_choice = st.selectbox("🌐 Select Language / Chọn ngôn ngữ / 選擇語言", list(languages.keys()), key="lang")
+lang_choice = st.selectbox("🌐 Select Language / Chọn ngôn ngữ / 選擇語言",
+                           list(languages.keys()), key="language_selector")
 lang = languages[lang_choice]
+
 
 # --- Localized Text ---
 text = {
