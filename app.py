@@ -96,7 +96,7 @@ cost_data = {
     ]
 }
 
-# --- User Input Dropdowns ---
+# --- Dropdown Inputs ---
 levels = {}
 for tech, data in cost_data.items():
     max_level = len(data)
@@ -120,8 +120,12 @@ for tech, data in cost_data.items():
         remaining["Iron"] += iron
         remaining["Bread"] += bread
         remaining["Gold"] += gold
-        tech_label = tech if tech == "Unit X" else f"{tech} {i+1}"
-        breakdown.append((tech_label, iron, bread, gold))
+        if tech == "Unit X":
+            label = "Unit X"
+        else:
+            level_number = i + 1
+            label = f"{tech} {level_number}"
+        breakdown.append((label, iron, bread, gold))
 
 # --- Format helper ---
 def fmt(n):
