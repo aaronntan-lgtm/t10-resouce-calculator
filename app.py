@@ -142,8 +142,6 @@ col3.metric("Gold", fmt(remaining["Gold"]))
 if breakdown:
     st.markdown(f"### {text['breakdown'][lang]}")
     df = pd.DataFrame(breakdown, columns=["Research", "Iron", "Bread", "Gold"])
-    df.index = df.index + 1  # Start S/N from 1
-    df.reset_index(inplace=True)
-    df.rename(columns={"index": "S/N"}, inplace=True)
+    df.index = df.index + 1  # Start from 1
     df[["Iron", "Bread", "Gold"]] = df[["Iron", "Bread", "Gold"]].applymap(fmt)
-    st.dataframe(df, use_container_width=True)
+    st.dataframe(df.set_index(df.index.rename("")), use_container_width=True)
