@@ -1,28 +1,8 @@
 import streamlit as st
 import pandas as pd
 
-# --- Dark Theme Styling ---
+# --- Page Setup ---
 st.set_page_config(page_title="🪖 T10 Grind", layout="wide")
-
-dark_theme = """
-    <style>
-    body {
-        background-color: #121212;
-        color: #e0e0e0;
-    }
-    .stApp {
-        background-color: #121212;
-    }
-    .stSelectbox, .stTextInput, .stDataFrame, .stMetric {
-        background-color: #1e1e1e !important;
-        color: #e0e0e0 !important;
-    }
-    table {
-        color: #e0e0e0 !important;
-    }
-    </style>
-"""
-st.markdown(dark_theme, unsafe_allow_html=True)
 
 # --- Language Toggle ---
 languages = {
