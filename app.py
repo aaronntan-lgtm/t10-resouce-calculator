@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 
 # --- Page Setup ---
-st.set_page_config(page_title="🪖 T10 Grind", layout="wide")
+st.set_page_config(page_title="🪖 T10 Grind", layout="centered")
 
 # --- Language Toggle (Top-Aligned) ---
 languages = {
