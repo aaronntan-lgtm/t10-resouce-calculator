@@ -2,16 +2,15 @@ import streamlit as st
 import pandas as pd
 
 # --- Page Setup ---
-st.set_page_config(page_title="🪖 T10 Grind", layout="centered")
+st.set_page_config(page_title="🪖 T10 Grind", layout="wide")
 
-# --- Language Toggle ---
+# --- Language Toggle (Top-Aligned) ---
 languages = {
     "English": "en",
     "Tiếng Việt": "vi",
     "繁體中文": "zh"
 }
-
-lang_choice = st.selectbox("🌐 Select Language / Chọn ngôn ngữ / 選擇語言", list(languages.keys()))
+lang_choice = st.selectbox("🌐 Select Language / Chọn ngôn ngữ / 選擇語言", list(languages.keys()), key="lang")
 lang = languages[lang_choice]
 
 # --- Localized Text ---
@@ -32,9 +31,9 @@ text = {
         "zh": "🧾 所需總資源"
     },
     "breakdown": {
-        "en": "🪙 Research Cost Breakdown",
-        "vi": "🪙 Chi Tiết Chi Phí Nghiên Cứu",
-        "zh": "🪙 研究資源明細"
+        "en": "🔍 Research Cost Breakdown",
+        "vi": "🔍 Chi Tiết Chi Phí Nghiên Cứu",
+        "zh": "🔍 研究資源明細"
     }
 }
 
@@ -42,7 +41,7 @@ text = {
 st.title(text["title"][lang])
 st.markdown(text["subtitle"][lang])
 
-# --- Cost Data ---
+# --- Research Cost Data ---
 cost_data = {
     "Advanced Protection": [
         (31_000_000, 31_000_000, 91_000_000),
@@ -97,7 +96,7 @@ cost_data = {
     ]
 }
 
-# --- Dropdowns ---
+# --- User Input Dropdowns ---
 levels = {}
 for tech, data in cost_data.items():
     max_level = len(data)
@@ -130,14 +129,14 @@ def fmt(n):
         return f"{n/1_000_000_000:.1f}G"
     return f"{n/1_000_000:.1f}M"
 
-# --- Total Display ---
+# --- Display Totals ---
 st.subheader(text["total"][lang])
 col1, col2, col3 = st.columns(3)
 col1.metric("Iron", fmt(remaining["Iron"]))
 col2.metric("Bread", fmt(remaining["Bread"]))
 col3.metric("Gold", fmt(remaining["Gold"]))
 
-# --- Breakdown Table ---
+# --- Display Breakdown Table ---
 if breakdown:
     st.markdown(f"### {text['breakdown'][lang]}")
     df = pd.DataFrame(breakdown, columns=["Research", "Iron", "Bread", "Gold"])
