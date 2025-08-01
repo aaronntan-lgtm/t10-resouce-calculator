@@ -32,9 +32,9 @@ text = {
         "zh": "🧾 所需總資源"
     },
     "breakdown": {
-        "en": "🔍 Research Cost Breakdown",
-        "vi": "🔍 Chi Tiết Chi Phí Nghiên Cứu",
-        "zh": "🔍 研究資源明細"
+        "en": "🪙 Research Cost Breakdown",
+        "vi": "🪙 Chi Tiết Chi Phí Nghiên Cứu",
+        "zh": "🪙 研究資源明細"
     }
 }
 
